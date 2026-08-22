@@ -1,96 +1,108 @@
 # TaskFlow
 
-A personal task and productivity manager: vanilla HTML/CSS/JS frontend, Express REST API backend, MySQL database, JWT auth.
+A simple full-stack **Task and Productivity Manager** built with HTML, CSS, JavaScript, Express.js, and MySQL.
 
-## 1. Required software
-- Node.js 18+
-- MySQL 8+ (or MariaDB)
-- A modern browser
+## ✨ Features
 
-## 2. Create the database
+* User registration and login
+* JWT authentication
+* Create, edit, and delete tasks
+* Mark tasks as completed/pending
+* Search, filter, and sort tasks
+* Task priorities and categories
+* Dashboard statistics
+* Weekly completion chart
+* Secure user-specific tasks
+
+## 🛠️ Technologies
+
+* **Frontend:** HTML, CSS, JavaScript
+* **Backend:** Node.js, Express.js
+* **Database:** MySQL
+* **Authentication:** JWT
+* **Password Security:** bcrypt
+
+## 📁 Project Structure
+
+```text
+TaskFlow/
+├── frontend/
+├── backend/
+├── database/
+└── README.md
+```
+
+## 🚀 Setup
+
+### 1. Requirements
+
+* Node.js 18+
+* MySQL 8+ or MariaDB
+* Modern web browser
+
+### 2. Database
+
+Create the database using:
+
 ```bash
-mysql -u root -p
+mysql -u root -p < database/schema.sql
 ```
-Then, inside the MySQL prompt, run the schema file:
-```sql
-source database/schema.sql;
-```
-(or from the shell: `mysql -u root -p < database/schema.sql`)
 
-This creates `taskflow_db` with the `users` and `tasks` tables.
+### 3. Configure Backend
 
-## 3. Configure environment variables
+Go to the backend folder:
+
 ```bash
 cd backend
-cp .env.example .env
 ```
-Edit `.env`:
-```
+
+Create a `.env` file:
+
+```env
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=your_mysql_password
 DB_NAME=taskflow_db
-JWT_SECRET=some_long_random_string
+JWT_SECRET=your_secret_key
 PORT=5000
 ```
 
-## 4. Install backend dependencies
+### 4. Install and Start
+
 ```bash
-cd backend
 npm install
-```
-
-## 5. Start the backend
-```bash
 npm start
-# or, for auto-reload during development:
-npm run dev
-```
-Verify it's running:
-```bash
-curl http://localhost:5000/api/health
 ```
 
-## 6. Open the frontend
-The frontend is static — no build step. Options:
-- Open `frontend/login.html` directly in a browser, or
-- Serve it locally, e.g. `npx serve frontend` and visit the printed URL.
+The backend will run at:
 
-`frontend/js/api.js` points at `http://localhost:5000/api` — update `BASE_URL` there if your backend runs elsewhere.
-
-## 7. Test the flow
-1. Register a new account on `register.html`.
-2. You're redirected to `dashboard.html` with a JWT stored in `localStorage`.
-3. Add a task, mark it complete, edit it, delete it, and try the search/filter/sort controls.
-4. Stats cards and the weekly chart pull from `GET /api/tasks/stats`.
-
-## API endpoints
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | /api/auth/register | No | Create account, returns JWT |
-| POST | /api/auth/login | No | Login, returns JWT |
-| GET | /api/auth/me | Yes | Current user profile |
-| GET | /api/tasks | Yes | List tasks (query: status, priority, category, search, due, sort) |
-| POST | /api/tasks | Yes | Create task |
-| GET | /api/tasks/:id | Yes | Get one task |
-| PUT | /api/tasks/:id | Yes | Update task |
-| DELETE | /api/tasks/:id | Yes | Delete task |
-| PATCH | /api/tasks/:id/complete | Yes | Set status (COMPLETED/PENDING) |
-| GET | /api/tasks/stats | Yes | Dashboard stats + weekly completion counts |
-
-`due` query values: `today`, `upcoming`, `overdue`. `sort` values: `due_date`, `priority`, `created_at`.
-
-## Architecture
+```text
+http://localhost:5000
 ```
-Frontend (HTML/CSS/JS, fetch())
-        ↓
-REST API (Express, JWT-protected routes)
-        ↓
-Controllers → Models (parameterized SQL)
-        ↓
-MySQL (taskflow_db)
-```
-Every task query is scoped by `user_id`, so one user can never read or modify another user's tasks. Passwords are hashed with bcrypt; the frontend never talks to MySQL directly.
 
-## Project structure
-See the folder tree in the project root — `frontend/`, `backend/` (config, middleware, controllers, routes, models), `database/schema.sql`.
+### 5. Run Frontend
+
+Open:
+
+```text
+frontend/login.html
+```
+
+in your browser.
+
+The frontend communicates with the backend through:
+
+```text
+http://localhost:5000/api
+```
+
+## 🔒 Security
+
+* Passwords are hashed using bcrypt.
+* JWT is used for authentication.
+* Each user's tasks are protected and isolated.
+* MySQL credentials are stored in `.env`.
+
+> **Never upload your `.env` file to GitHub.**
+
+

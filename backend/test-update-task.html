@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TaskFlow Update Task Test</title>
+</head>
+<body>
+
+    <h2>Update Task</h2>
+
+    <button onclick="updateTask()">Update Task #1</button>
+
+    <pre id="result"></pre>
+
+    <script>
+        async function updateTask() {
+
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                document.getElementById("result").textContent =
+                    "No JWT token found. Please login first.";
+                return;
+            }
+
+            try {
+
+                const response = await fetch(
+                    "http://localhost:5000/api/tasks/1",
+                    {
+                        method: "PUT",
+
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + token
+                        },
+
+                        body: JSON.stringify({
+                            title: "Complete TaskFlow Backend",
+                            description: "Finish authentication and CRUD API testing",
+                            priority: "HIGH",
+                            category: "Project",
+                            due_date: "2026-08-30",
+                            status: "PENDING"
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                document.getElementById("result").textContent =
+                    JSON.stringify(data, null, 2);
+
+            } catch (error) {
+
+                document.getElementById("result").textContent =
+                    "Error: " + error.message;
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TaskFlow — Register</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="auth-wrap">
+    <h1 class="auth-title">To Do</h1>
+    <p class="auth-sub">Create an account to get organized</p>
+    <div class="error-msg" id="errorMsg"></div>
+    <form id="registerForm">
+      <div class="field">
+        <label for="name">Name</label>
+        <input type="text" id="name" required autocomplete="name" />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" required autocomplete="email" />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" required minlength="6" autocomplete="new-password" />
+      </div>
+      <button type="submit" class="btn-primary">Create Account</button>
+    </form>
+    <p class="auth-alt">Already have an account? <a href="login.html">Log in</a></p>
+  </div>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

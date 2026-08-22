@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TaskFlow — Dashboard</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="dashboard-body">
+  <div class="card">
+    <div class="card-header">
+      <div class="logo">To Do</div>
+      <div style="display:flex; gap:8px;">
+        <button class="icon-btn" id="logoutBtn" title="Logout">⏻</button>
+      </div>
+    </div>
+
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Search tasks..." />
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box total"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total</div></div>
+      <div class="stat-box done"><div class="stat-num" id="statDone">0</div><div class="stat-label">Done</div></div>
+      <div class="stat-box pending"><div class="stat-num" id="statPending">0</div><div class="stat-label">Pending</div></div>
+      <div class="stat-box overdue"><div class="stat-num" id="statOverdue">0</div><div class="stat-label">Overdue</div></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="tabs">
+        <button class="tab active" data-tab="all">All</button>
+        <button class="tab" data-tab="active">Active</button>
+        <button class="tab" data-tab="completed">Completed</button>
+      </div>
+      <div class="toolbar-right">
+        <select id="sortSelect">
+          <option value="created_at">Newest</option>
+          <option value="due_date">Due date</option>
+          <option value="priority">Priority</option>
+        </select>
+        <button class="btn-add" id="addTaskBtn">+ Add Task</button>
+      </div>
+    </div>
+
+    <div class="filters-row">
+      <select id="filterCategory"><option value="">All categories</option></select>
+      <select id="filterPriority">
+        <option value="">All priorities</option>
+        <option value="HIGH">High</option>
+        <option value="MEDIUM">Medium</option>
+        <option value="LOW">Low</option>
+      </select>
+      <select id="filterDue">
+        <option value="">All dates</option>
+        <option value="today">Today</option>
+        <option value="upcoming">Upcoming</option>
+        <option value="overdue">Overdue</option>
+      </select>
+    </div>
+
+    <div class="list-meta">
+      <span id="remainingCount">0 remaining</span>
+      <button id="clearCompletedBtn">Clear completed</button>
+    </div>
+
+    <div class="task-list" id="taskList"></div>
+
+    <div class="chart-card">
+      <h4>Weekly Productivity</h4>
+      <div class="bars" id="weeklyChart"></div>
+    </div>
+
+    <div class="hearts">♡ ♡ ♡</div>
+  </div>
+
+  <!-- Add / Edit Task Modal -->
+  <div class="modal-overlay" id="taskModalOverlay">
+    <div class="modal">
+      <h3 id="modalTitle">Add Task</h3>
+      <form id="taskForm">
+        <input type="hidden" id="taskId" />
+        <div class="field">
+          <label for="taskTitle">Title</label>
+          <input type="text" id="taskTitle" required />
+        </div>
+        <div class="field">
+          <label for="taskDescription">Description</label>
+          <textarea id="taskDescription" rows="2"></textarea>
+        </div>
+        <div class="modal-row">
+          <div class="field">
+            <label for="taskPriority">Priority</label>
+            <select id="taskPriority">
+              <option value="LOW">Low</option>
+              <option value="MEDIUM" selected>Medium</option>
+              <option value="HIGH">High</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="taskCategory">Category</label>
+            <input type="text" id="taskCategory" placeholder="e.g. Work" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="taskDueDate">Due date</label>
+          <input type="date" id="taskDueDate" />
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancelModalBtn">Cancel</button>
+          <button type="submit" class="btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

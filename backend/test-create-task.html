@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TaskFlow Create Task Test</title>
+</head>
+<body>
+
+    <h2>Create Task</h2>
+
+    <button onclick="createTask()">Create Test Task</button>
+
+    <pre id="result"></pre>
+
+    <script>
+        async function createTask() {
+
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                document.getElementById("result").textContent =
+                    "No JWT token found. Please login first.";
+                return;
+            }
+
+            try {
+
+                const response = await fetch(
+                    "http://localhost:5000/api/tasks",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + token
+                        },
+
+                        body: JSON.stringify({
+                            title: "Learn Full Stack Development",
+                            description: "Build and test my TaskFlow project",
+                            priority: "HIGH",
+                            category: "Learning",
+                            due_date: "2026-08-30"
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                document.getElementById("result").textContent =
+                    JSON.stringify(data, null, 2);
+
+            } catch (error) {
+
+                document.getElementById("result").textContent =
+                    "Error: " + error.message;
+            }
+        }
+    </script>
+
+</body>
+</html>

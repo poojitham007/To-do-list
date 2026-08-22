@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TaskFlow Login Test</title>
+</head>
+<body>
+
+    <h2>TaskFlow Login</h2>
+
+    <button onclick="login()">Login Test User</button>
+
+    <pre id="result"></pre>
+
+    <script>
+        async function login() {
+            try {
+                const response = await fetch(
+                    "http://localhost:5000/api/auth/login",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            email: "test@example.com",
+                            password: "Test@123"
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                document.getElementById("result").textContent =
+                    JSON.stringify(data, null, 2);
+
+                // Store JWT token if login succeeds
+                if (data.token) {
+                    localStorage.setItem("token", data.token);
+                }
+
+            } catch (error) {
+                document.getElementById("result").textContent =
+                    "Error: " + error.message;
+            }
+        }
+    </script>
+
+</body>
+</html>
